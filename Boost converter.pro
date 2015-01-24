@@ -2,23 +2,23 @@ EAGLE AutoRouter Statistics:
 
 Job           : /home/ayrton/HV-AVR-Programmer/Boost converter.brd
 
-Start at      : 14:44:16 (1/24/15)
-End at        : 14:44:27 (1/24/15)
-Elapsed time  : 00:00:10
+Start at      : 17:22:22 (1/24/15)
+End at        : 17:22:35 (1/24/15)
+Elapsed time  : 00:00:11
 
-Signals       :    18   RoutingGrid: 6 mil  Layers: 2
-Connections   :    44   predefined:  42 ( 0 Vias )
+Signals       :    21   RoutingGrid: 6 mil  Layers: 2
+Connections   :    47   predefined:  11 ( 0 Vias )
 
-Router memory :   343380
+Router memory :   364720
 
 Passname          : TopRouter     Route Optimize1 Optimize2 Optimize3 Optimize4
 
-Time per pass     :  00:00:09  00:00:00  00:00:00  00:00:01  00:00:00  00:00:00
+Time per pass     :  00:00:07  00:00:00  00:00:01  00:00:01  00:00:01  00:00:01
 Number of Ripups  :         0         0         0         0         0         0
 max. Level        :         0         0         0         0         0         0
 max. Total        :         0         0         0         0         0         0
 
-Routed            :         2         2         2         2         2         2
+Routed            :        36        36        36        36        36        36
 Vias              :         0         0         0         0         0         0
 Resolution        :   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
 
