@@ -1,9 +1,9 @@
 EAGLE AutoRouter Statistics:
 
-Job           : /home/ayrton/HV-AVR-Programmer/Boost converter.brd
+Job           : /home/ayrton/HV-AVR-Programmer/board/Boost converter.brd
 
-Start at      : 17:22:22 (1/24/15)
-End at        : 17:22:35 (1/24/15)
+Start at      : 17:46:42 (1/24/15)
+End at        : 17:46:54 (1/24/15)
 Elapsed time  : 00:00:11
 
 Signals       :    21   RoutingGrid: 6 mil  Layers: 2
