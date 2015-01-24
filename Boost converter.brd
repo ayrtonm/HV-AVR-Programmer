@@ -1831,24 +1831,6 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="12.6492" y1="7.62" x2="11.7348" y2="8.5344" width="0.1524" layer="1"/>
 <wire x1="12.6492" y1="7.62" x2="12.7" y2="7.62" width="0.1524" layer="1"/>
 </signal>
-<signal name="N$4">
-<contactref element="IC2" pad="2"/>
-<contactref element="R5" pad="2"/>
-<wire x1="3.81" y1="32.3088" x2="3.81" y2="33.02" width="0.1524" layer="1"/>
-<wire x1="9.906" y1="26.2128" x2="3.81" y2="32.3088" width="0.1524" layer="1"/>
-<wire x1="9.906" y1="17.9832" x2="9.906" y2="26.2128" width="0.1524" layer="1"/>
-<wire x1="12.6492" y1="15.24" x2="9.906" y2="17.9832" width="0.1524" layer="1"/>
-<wire x1="12.6492" y1="15.24" x2="12.7" y2="15.24" width="0.1524" layer="1"/>
-</signal>
-<signal name="N$5">
-<contactref element="IC2" pad="3"/>
-<contactref element="R6" pad="2"/>
-<wire x1="3.81" y1="29.8704" x2="3.81" y2="30.48" width="0.1524" layer="16"/>
-<wire x1="9.906" y1="23.7744" x2="3.81" y2="29.8704" width="0.1524" layer="16"/>
-<wire x1="9.906" y1="15.3924" x2="9.906" y2="23.7744" width="0.1524" layer="16"/>
-<wire x1="10.0584" y1="15.24" x2="9.906" y2="15.3924" width="0.1524" layer="16"/>
-<wire x1="10.0584" y1="15.24" x2="10.16" y2="15.24" width="0.1524" layer="16"/>
-</signal>
 <signal name="N$1">
 <contactref element="R8" pad="1"/>
 <contactref element="IC2" pad="4"/>
@@ -1971,6 +1953,20 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="7.62" y1="43.2816" x2="7.62" y2="43.7388" width="0.1524" layer="1"/>
 <wire x1="8.8392" y1="57.15" x2="8.93" y2="57.15" width="0.1524" layer="1"/>
 <wire x1="7.62" y1="43.2816" x2="7.62" y2="43.18" width="0.1524" layer="1"/>
+</signal>
+<signal name="N$4">
+<contactref element="R5" pad="2"/>
+<contactref element="IC2" pad="6"/>
+<wire x1="11.43" y1="15.24" x2="12.7" y2="15.24" width="0.1524" layer="16"/>
+<wire x1="3.81" y1="22.86" x2="11.43" y2="15.24" width="0.1524" layer="16"/>
+</signal>
+<signal name="N$5">
+<contactref element="R6" pad="2"/>
+<contactref element="IC2" pad="5"/>
+<wire x1="3.81" y1="24.6888" x2="3.81" y2="25.4" width="0.1524" layer="1"/>
+<wire x1="10.0584" y1="18.4404" x2="3.81" y2="24.6888" width="0.1524" layer="1"/>
+<wire x1="10.0584" y1="15.24" x2="10.0584" y2="18.4404" width="0.1524" layer="1"/>
+<wire x1="10.0584" y1="15.24" x2="10.16" y2="15.24" width="0.1524" layer="1"/>
 </signal>
 </signals>
 </board>

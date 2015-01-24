@@ -134,8 +134,8 @@
 <wire x1="25.07" y1="0" x2="25.07" y2="63.49" width="0" layer="20"/>
 <wire x1="25.07" y1="63.49" x2="0" y2="63.49" width="0" layer="20"/>
 <wire x1="0" y1="63.49" x2="0" y2="0" width="0" layer="20"/>
-<text x="19.05" y="63.5" size="1.016" layer="21" rot="R270">High Voltage
-AVR Programmer</text>
+<text x="21.59" y="53.34" size="1.016" layer="21" rot="R90">HV AVR
+Programmer</text>
 </plain>
 <libraries>
 <library name="resistor">
