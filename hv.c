@@ -67,27 +67,25 @@ uint8_t rw_byte(uint8_t sdi, uint8_t sii)
   return data;
 }
 
+//host software will take care of warning people from writing fuse bits incorrectly masking efuse to be 0x00 or 0x01
 void write_lfuse_bits(uint8_t lfuse)
 {
   rw_byte(0x40,0x4C);
-  rw_byte(0x00,0x2C);
+  rw_byte(lfuse,0x2C);
   rw_byte(0x00,0x64);
   rw_byte(0x00,0x6C);
-  //not sure how to transfer lfuse data
 }
 void write_hfuse_bits(uint8_t hfuse)
 {
   rw_byte(0x40,0x4C);
-  rw_byte(0x00,0x2C);
+  rw_byte(hfuse,0x2C);
   rw_byte(0x00,0x74);
   rw_byte(0x00,0x7C);
-  //not sure how to transfer hfuse data
 }
 void write_efuse_bits(uint8_t efuse)
 {
   rw_byte(0x40,0x4C);
-  rw_byte(0x00,0x2C);
+  rw_byte(efuse,0x2C);
   rw_byte(0x00,0x66);
   rw_byte(0x00,0x6E);
-  //not sure how to transfer efuse data
 }
