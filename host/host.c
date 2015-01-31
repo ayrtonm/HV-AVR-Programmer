@@ -98,26 +98,22 @@ static usb_dev_handle * usbOpenDevice(int vendor, char *vendorName,
 
 int main(int argc, char **argv)
 {
-  if (argc == 2)
+  if (argc == 1)
   {
-    printf("Digital Logic Analyzer\npress e to increase scrolling speed\npress d to decrease scrolling speed\npress q to quit\n");
+    printf("HV AVR Programmer\n");
     return 0;
   }
-  init_draw();
   usb_dev_handle *handle = NULL;
   int nBytes;
-  unsigned char shift_buffer[256];
-  handle = usbOpenDevice(0x16c0,"ayrton",0x05DC,"shiftregister");
+  unsigned char return_buffer[256];
+  handle = usbOpenDevice(0x16c0,"ayrton",0x05DC,"hvprogrammer");
   if (handle == NULL)
   {
     fprintf(stderr,"Could not find USB device\n");
     exit(1);
   }
-  int t = 0;
-  for(;;)
-  {
-    
-  }
+  nBytes = usb_control_msg(handle,USB_TYPE_VENDOR|USB_RECIP_DEVICE|USB_ENDPOINT_IN,WRITE_DEFAULT_FUSE,0,0,(char * )return_buffer,sizeof(return_buffer),5000);
+  printf("default fuses written\n");
   usb_close(handle);
   return 0;
 }
