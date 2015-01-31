@@ -1,6 +1,6 @@
 //12 MHz with external crystal oscillator to allow V-USB to work
 //set fuse bits with the following command
-//avrdude -p t84 -U lfuse:w:0x6f:m -U hfuse:w:0xdf:m - Uefuse:w:0xff:m
+//avrdude -p t84 -U lfuse:w:0x6f:m -U hfuse:w:0xdf:m - U efuse:w:0xff:m
 #define F_CPU 12000000
 #include <avr/io.h>
 #include <util/delay.h>
