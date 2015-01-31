@@ -10,9 +10,9 @@ USB_PUBLIC uint8_t usbFunctionSetup(uint8_t data[8])
   {
     case WRITE_DEFAULT_FUSE:
     {
-      write_lfuse_bits(0x62);
-      write_hfuse_bits(0xdf);
-      write_efuse_bits(0xff);
+      write_lfuse_bits(~0x62);
+      write_hfuse_bits(~0xdf);
+      write_efuse_bits((~0xff) & 0x01);
       return 0;
     }
   }
