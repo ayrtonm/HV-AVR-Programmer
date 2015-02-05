@@ -1,10 +1,10 @@
 //12 MHz with external crystal oscillator to allow V-USB to work
 //set fuse bits with the following command
 //avrdude -p t84 -U lfuse:w:0x6f:m -U hfuse:w:0xdf:m - U efuse:w:0xff:m
-#define F_CPU 12000000
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdint.h>
+#include "hv.h"
 #define RESET_HV PA1
 #define SDI PA2
 #define SII PA3
@@ -52,11 +52,12 @@ uint8_t rw_byte(uint8_t sdi, uint8_t sii)
   HV_WL(SII);
   TOGGLE_CLK;
   uint8_t i;
-  uint8_t data;
+  uint8_t data = 0;
   for (i = 0; i < 8; i++)
   {
     TOGGLE_CLK;
-    data |= (PINA & (1 << SDO)) << (7-SDO-i);
+    //data |= (PINA & (1 << SDO)) << (7-SDO-i);
+    data |= (PINA & (1 << SDO)) << i;
     if (sii & (1 << (7-i))) HV_WH(SII);
     if (sdi & (1 << (7-i))) HV_WH(SDI);
   }
@@ -64,6 +65,10 @@ uint8_t rw_byte(uint8_t sdi, uint8_t sii)
   HV_WL(SII);
   TOGGLE_CLK;
   TOGGLE_CLK;
+  //flip data
+  data = (data & 0x0f) << 4| (0xf0 & data) >> 4;
+  data = (data & 0x33) << 2| (0xcc & data) >> 2;
+  data = (data & 0x55) << 1| (0xaa & data) >> 1;
   return data;
 }
 
