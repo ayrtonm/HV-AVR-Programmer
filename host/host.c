@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <usb.h>
-#include "draw.h"
 #define WRITE_DEFAULT_FUSE 0
 
 /* Used to get descriptor strings for device identification */

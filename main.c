@@ -30,6 +30,8 @@ USB_PUBLIC uint8_t usbFunctionSetup(uint8_t data[8])
 }
 int main()
 {
+  DDRA = (1 << PA1);
+  PORTA = (1 << PA1);
   uint8_t i;
   wdt_enable(WDTO_1S);
   usbInit();
