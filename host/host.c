@@ -97,7 +97,7 @@ static usb_dev_handle * usbOpenDevice(int vendor, char *vendorName,
 
 int main(int argc, char **argv)
 {
-  if (argc == 1)
+  if (argc == 2)
   {
     printf("HV AVR Programmer\n");
     return 0;
