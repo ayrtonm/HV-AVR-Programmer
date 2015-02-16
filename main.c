@@ -8,6 +8,7 @@
 #define F_CPU 12000000
 #define WRITE_DEFAULT_FUSE 0
 
+// Called by V-USB after device reset
 void hadUsbReset()
 {
 }
@@ -30,6 +31,7 @@ USB_PUBLIC uint8_t usbFunctionSetup(uint8_t data[8])
 }
 int main()
 {
+  //comment to turn on boost converter
   DDRA = (1 << PA1);
   PORTA = (1 << PA1);
   uint8_t i;
