@@ -5,12 +5,15 @@
 #include <util/delay.h>
 #include <stdint.h>
 #include "hv.h"
+//turns on boost converter and 555 timer
 #define RESET_HV PA1
 #define SDI PA2
 #define SII PA3
 #define SDO PA4
 #define SCI PA6
 #define VCC PA5
+//supplies to 12V to reset pin through cmos inverter
+#define RESET_EN PB2
 //don't need macros for D+ and D- here only for clarification about their purpose
 //#define D+ PA0
 //#define D- PA7
