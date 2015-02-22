@@ -20,9 +20,11 @@ USB_PUBLIC uint8_t usbFunctionSetup(uint8_t data[8])
   {
     case WRITE_DEFAULT_FUSE:
     {
-      write_lfuse_bits((~0x62) & 0xff);
-      write_hfuse_bits((~0xdf) & 0xff);
-      write_efuse_bits((~0xff) & 0x01);
+      enter_hv();
+      write_lfuse_bits((0x62) & 0xff);
+      write_hfuse_bits((0xdf) & 0xff);
+      write_efuse_bits((0xff) & 0x01);
+      exit_hv();
       return 0;
     }
   }
@@ -31,9 +33,6 @@ USB_PUBLIC uint8_t usbFunctionSetup(uint8_t data[8])
 }
 int main()
 {
-  //comment to turn on boost converter
-  DDRA = (1 << PA1);
-  PORTA = (1 << PA1);
   uint8_t i;
   wdt_enable(WDTO_1S);
   usbInit();

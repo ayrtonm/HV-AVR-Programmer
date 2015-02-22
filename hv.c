@@ -13,6 +13,7 @@
 #define SCI PA6
 #define VCC PA5
 //supplies to 12V to reset pin through cmos inverter
+//can't use HV_ macros since it's PORTB
 #define RESET_EN PB2
 //don't need macros for D+ and D- here only for clarification about their purpose
 //#define D+ PA0
@@ -25,26 +26,44 @@
 
 void enter_hv(void)
 {
-  DDRA |= (1 << SDI)|(1 << SII)|(1 << SDO)|(1 << SCI)|(1 << RESET_HV);
+  //sdo temporarily made output, released later
+  DDRA |= (1 << SDI)|(1 << SII)|(1 << SCI)|(1 << RESET_HV)|(1 << VCC)|(1 << SDO);
+  //make reset_en output
+  DDRB |= (1 << RESET_EN);
+  //turn off cmos inverter
+  PORTB |= (1 << RESET_EN);
+  //supply voltage to boost converter
+  HV_WH(RESET_HV);
+  //wait 3 ms for boost converter to stabilize to 12V
+  _delay_ms(3);
+
+  //start of actual enter hvsp on attinyx5
   HV_WL(SDI);
   HV_WL(SII);
   HV_WL(SDO);
   HV_WL(VCC);
-  HV_WH(RESET_HV);//writing 1 to hv pin turns boost converter off
-  HV_WH(VCC);//if vcc rise time is too long, may need to use alternate algorithm
-  _delay_us(60);
-  HV_WL(RESET_HV);//turn on boost converter
-  //maye need to do this before 60 us delay or even before turning on vcc depending on rise speed for boost converter
+  //wait
+  _delay_us(100);
+  //if vcc rise time is too long, may need to use alternate algorithm
+  HV_WH(VCC);
+  //wait 40 us
+  _delay_us(40);
+  //enable cmos inverter to supply 12V
+  PORTB &= ~(1 << RESET_EN);
+  //making sure prog enable signature is latched
   _delay_us(10);
-  //release sdo
+  //release sdo to avoid contention
   DDRA &= ~(1 << SDO);
+  //wait before giving instructions
   _delay_us(300);
+  _delay_ms(10000);
   //give instructions
 }
 void exit_hv(void)
 {
-  HV_WH(RESET_HV);
-  HV_WL(VCC);
+  PORTB |= (1 << RESET_EN);//remove 12V supply
+  HV_WL(RESET_HV);//turn off boost converter
+  HV_WL(VCC);//remove power from attiny85
 }
 
 uint8_t rw_byte(uint8_t sdi, uint8_t sii)
@@ -82,6 +101,8 @@ void write_lfuse_bits(uint8_t lfuse)
   rw_byte(lfuse,0x2C);
   rw_byte(0x00,0x64);
   rw_byte(0x00,0x6C);
+  _delay_ms(3);
+  //while(~(PINA & (1 << SDO))) {_delay_us(1);}
 }
 void write_hfuse_bits(uint8_t hfuse)
 {
@@ -89,6 +110,8 @@ void write_hfuse_bits(uint8_t hfuse)
   rw_byte(hfuse,0x2C);
   rw_byte(0x00,0x74);
   rw_byte(0x00,0x7C);
+  _delay_ms(3);
+  //while(~(PINA & (1 << SDO))) {_delay_us(1);}
 }
 void write_efuse_bits(uint8_t efuse)
 {
@@ -96,4 +119,6 @@ void write_efuse_bits(uint8_t efuse)
   rw_byte(efuse,0x2C);
   rw_byte(0x00,0x66);
   rw_byte(0x00,0x6E);
+  _delay_ms(3);
+  //while(~(PINA & (1 << SDO))) {_delay_us(1);}
 }
