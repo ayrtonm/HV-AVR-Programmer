@@ -5,17 +5,18 @@
 #include <util/delay.h>
 #include <stdint.h>
 #include "hv.h"
-//turns on boost converter and 555 timer
+//turns on pmos for boost converter and 555 timer
 #define RESET_HV PA1
 #define SDI PA2
 #define SII PA3
 #define SDO PA4
 #define SCI PA6
 #define VCC PA5
-//supplies to 12V to reset pin through cmos inverter
+//supplies to 12V from boost converter to reset pin
+//connected to bjts
 //can't use HV_ macros since it's PORTB
 #define RESET_EN PB2
-//don't need macros for D+ and D- here only for clarification about their purpose
+//don't actually need macros for D+ and D- here only for information about what other pins are used for
 //#define D+ PA0
 //#define D- PA7
 #define WH(PORT,PIN) PORT |= (1 << PIN)
@@ -23,6 +24,7 @@
 #define HV_WH(PIN) WH(PORTA,PIN)
 #define HV_WL(PIN) WL(PORTA,PIN)
 #define TOGGLE_CLK HV_WH(SCI);HV_WL(SCI)
+#define BOOST_WAIT_TIME 3
 
 void enter_hv(void)
 {
@@ -30,12 +32,12 @@ void enter_hv(void)
   DDRA |= (1 << SDI)|(1 << SII)|(1 << SCI)|(1 << RESET_HV)|(1 << VCC)|(1 << SDO);
   //make reset_en output
   DDRB |= (1 << RESET_EN);
-  //turn off cmos inverter
-  PORTB |= (1 << RESET_EN);
+  //disable boost converter output
+  PORTB &= ~(1 << RESET_EN);
   //supply voltage to boost converter
-  HV_WH(RESET_HV);
+  HV_WL(RESET_HV);
   //wait 3 ms for boost converter to stabilize to 12V
-  _delay_ms(3);
+  _delay_ms(BOOST_WAIT_TIME);
 
   //start of actual enter hvsp on attinyx5
   HV_WL(SDI);
@@ -48,21 +50,22 @@ void enter_hv(void)
   HV_WH(VCC);
   //wait 40 us
   _delay_us(40);
-  //enable cmos inverter to supply 12V
-  PORTB &= ~(1 << RESET_EN);
+  //enable bjt amp to supply 12V
+  PORTB |= (1 << RESET_EN);
   //making sure prog enable signature is latched
   _delay_us(10);
   //release sdo to avoid contention
   DDRA &= ~(1 << SDO);
   //wait before giving instructions
   _delay_us(300);
-  _delay_ms(10000);
+  //next delay is to give me enough time to read the output on the voltmeter
+  _delay_ms(20000);
   //give instructions
 }
 void exit_hv(void)
 {
-  PORTB |= (1 << RESET_EN);//remove 12V supply
-  HV_WL(RESET_HV);//turn off boost converter
+  PORTB &= ~(1 << RESET_EN);//remove 12V supply
+  HV_WH(RESET_HV);//turn off boost converter
   HV_WL(VCC);//remove power from attiny85
 }
 
